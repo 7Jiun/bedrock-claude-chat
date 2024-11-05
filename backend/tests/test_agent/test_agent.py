@@ -8,6 +8,8 @@ from pprint import pprint
 from app.agents.agent import AgentMessageModel, AgentRunner, OnStopInput
 from app.agents.tools.agent_tool import RunResult
 from app.agents.tools.internet_search import internet_search_tool
+from app.agents.tools.exchange_calculate import currency_convert_tool
+
 from app.bedrock import ConverseApiToolResult, ConverseApiToolUseContent
 from app.repositories.models.conversation import (
     AgentToolUseContentModel,
@@ -101,7 +103,7 @@ class TestAgentRunner(unittest.TestCase):
             bedrock_knowledge_base=None,
             bedrock_guardrails=None,
         )
-        tools = [internet_search_tool]
+        tools = [internet_search_tool, currency_convert_tool]
         model = "claude-v3-sonnet"
         self.runner = AgentRunner(
             bot=bot,
@@ -120,7 +122,7 @@ class TestAgentRunner(unittest.TestCase):
                 ContentModel(
                     content_type="text",
                     media_type=None,
-                    body="今日の東京の天気?あと宮崎の天気も。並列処理して",
+                    body="我有100塊新台幣，依今天的匯率可以換到多少日圓？",
                     file_name=None,
                 )
             ],
